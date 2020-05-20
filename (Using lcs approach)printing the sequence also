@@ -1,0 +1,61 @@
+class Solution {
+public:
+
+ int dp[1001][1001];
+    int lcs(string &s1, string &s2, int i, int j, int dp[1001][1001]){
+
+        if(i==0 || j== 0)
+        {    //dp[i][j] =0;
+             return 0;
+        }
+
+        if(dp[i-1][j-1] != -1)
+         return dp[i-1][j-1];
+        
+         if(s1[i-1] == s2[j-1])
+         {  dp[i-1][j-1] = 1+ lcs(s1, s2, i-1, j-1, dp); 
+             return dp[i-1][j-1];
+          }
+        else
+        {  dp[i-1][j-1] =  max(lcs(s1, s2, i-1, j, dp), lcs(s1, s2, i, j-1, dp));
+            return dp[i-1][j-1];
+        }
+                 // return dp[i-1][j-1];
+ }
+    
+     int longestPalindromeSubseq(string s) {
+        string str =s;
+        reverse(str.begin(), str.end());
+       // vector<vector<int>>dp(s.size()+1);
+      //  int n,m = s.size();
+       // int dp[n+1][m+1];
+         memset(dp, -1, sizeof(dp));
+         int m =s.size();
+         int n =s.size();
+        lcs(s, str,s.size(),s.size(), dp);
+        
+      /*  for(int i=0; i<=s.size(); i++){
+            for(int j=0; j<=s.size(); j++){
+                cout<<dp[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        string st = "";
+        int i =s.size();
+        int j=s.size();
+       // cout<<i<<j;
+        while(i>0 && j>0){
+            if(s[i-1] == str[j-1])
+            {  st += s[i-1];
+                i--;
+                j--;
+            }
+            else if(dp[i-1][j] > dp[i][j-1]){
+                      i--;
+                }
+            else
+                j--;
+        } */
+        return dp[m-1][n-1];
+    }
+};
